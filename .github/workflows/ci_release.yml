@@ -1,0 +1,13 @@
+name: CI and Release
+on:
+  push:
+    branches:
+      - main
+    # Trigger on version tags
+    tags:
+      - "v*"
+  pull_request:
+
+jobs:
+  lint:
+    uses: ./.github/workflows/lint.yml
