@@ -11,6 +11,7 @@ import (
 	"github.com/rollkit/go-sequencing"
 )
 
+// Sequencer implements go-sequencing interfaces for Astria sequencing network.
 type Sequencer struct {
 	client *astria.Client
 	signer *astria.Signer
@@ -18,6 +19,7 @@ type Sequencer struct {
 
 var _ sequencing.Sequencer = &Sequencer{}
 
+// New creates a new instance of Sequencer with the provided URL.
 func New(url string) (*Sequencer, error) {
 	signer, err := astria.GenerateSigner()
 	if err != nil {
@@ -35,6 +37,7 @@ func New(url string) (*Sequencer, error) {
 	}, nil
 }
 
+// SubmitRollupTransaction submits a transaction from rollup to sequencer
 func (s *Sequencer) SubmitRollupTransaction(ctx context.Context, rollupId sequencing.RollupId, tx sequencing.Tx) error {
 	unsignedTx := &txproto.UnsignedTransaction{
 		Actions: []*txproto.Action{
@@ -60,11 +63,15 @@ func (s *Sequencer) SubmitRollupTransaction(ctx context.Context, rollupId sequen
 	return err
 }
 
+// GetNextBatch returns the next batch of transactions from sequencer to rollup
+// lastBatch is the last batch of transactions received from the sequencer
+// returns the next batch of transactions and an error if any from the sequencer
 func (s *Sequencer) GetNextBatch(ctx context.Context, lastBatch *sequencing.Batch) (*sequencing.Batch, error) {
 	//TODO implement me
 	panic("implement me")
 }
 
+// VerifyBatch verifies a batch of transactions received from the sequencer
 func (s *Sequencer) VerifyBatch(ctx context.Context, batch *sequencing.Batch) (bool, error) {
 	//TODO implement me
 	panic("implement me")
